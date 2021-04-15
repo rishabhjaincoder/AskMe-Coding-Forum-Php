@@ -24,18 +24,40 @@
     <?php include 'partials/_header.php'; ?>
     <?php include 'partials/_dbconnect.php'; ?>
 
+    <?php
+    $id = $_GET['catid'];
+    $sql = "SELECT * FROM `categories` WHERE category_id=$id";
+    $result = mysqli_query($conn,$sql);
+    while($row = mysqli_fetch_assoc($result)){
+        $catname = $row['category_name'];
+        $catdesc = $row['category_description'];
+    }
+    ?>
+
     <!-- ------------------- Jumbotron ------------------- -->
     <div class="container-fluid bg-dark text-light my-0 py-3 px-5">
         <div class="jumbotron-fluid">
-            <h1 class="display-4">Welcome to JavaScript Forums!</h1>
-            <p class="lead">JavaScript, often abbreviated as JS, is a programming language that conforms to the
-                ECMAScript specification. JavaScript is high-level, often just-in-time compiled, and multi-paradigm.</p>
+            <h1 class="display-4">Welcome to <?php echo $catname ?> Forums!</h1>
+            <p class="lead"><?php echo $catdesc ?></p>
             <hr class="my-4">
-            <p>This is a peer to peer forum. No Spam / Advertising / Self-promote in the forums is not allowed. Do not post copyright-infringing material. Do not post “offensive” posts, links or images. Remain respectful of other members at all times</p>
+            <p>This is a peer to peer forum. No Spam / Advertising / Self-promote in the forums is not allowed. Do not
+                post copyright-infringing material. Do not post “offensive” posts, links or images. Remain respectful of
+                other members at all times</p>
             <p class="lead">
                 <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
             </p>
         </div>
+    </div>
+
+    <!-- ------------------- BreadCrumb ------------------- -->
+    <div class="container my-3" style="font-size: 20px;">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+            aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/forum/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><?php echo $catname ?></li>
+            </ol>
+        </nav>
     </div>
 
     <!-- ------------------- Browse Questions ------------------- -->
@@ -46,78 +68,92 @@
     <div class="container my-4 px-5">
         <div class="media row my-3">
             <div class="col-12 col-md-1 d-flex justify-content-center">
-                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png" alt="Generic placeholder image">
+                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
+                    alt="Generic placeholder image">
             </div>
             <div class="col-12 col-md-11">
                 <div class="media-body">
                     <h5 class="mt-3 mt-md-0">Pandas replace function not working on datafram with floats</h5>
-                    I am using Pandas' replace function and it works on one DataFrame but not on another and I don't understand why. I have tried many different solutions but nothing seems to work 
+                    I am using Pandas' replace function and it works on one DataFrame but not on another and I don't
+                    understand why. I have tried many different solutions but nothing seems to work
                 </div>
             </div>
         </div>
         <div class="media row my-3">
             <div class="col-12 col-md-1 d-flex justify-content-center">
-                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png" alt="Generic placeholder image">
+                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
+                    alt="Generic placeholder image">
             </div>
             <div class="col-12 col-md-11">
                 <div class="media-body">
                     <h5 class="mt-3 mt-md-0">Pandas replace function not working on datafram with floats</h5>
-                    I am using Pandas' replace function and it works on one DataFrame but not on another and I don't understand why. I have tried many different solutions but nothing seems to work 
+                    I am using Pandas' replace function and it works on one DataFrame but not on another and I don't
+                    understand why. I have tried many different solutions but nothing seems to work
                 </div>
             </div>
         </div>
         <div class="media row my-3">
             <div class="col-12 col-md-1 d-flex justify-content-center">
-                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png" alt="Generic placeholder image">
+                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
+                    alt="Generic placeholder image">
             </div>
             <div class="col-12 col-md-11">
                 <div class="media-body">
                     <h5 class="mt-3 mt-md-0">Pandas replace function not working on datafram with floats</h5>
-                    I am using Pandas' replace function and it works on one DataFrame but not on another and I don't understand why. I have tried many different solutions but nothing seems to work 
+                    I am using Pandas' replace function and it works on one DataFrame but not on another and I don't
+                    understand why. I have tried many different solutions but nothing seems to work
                 </div>
             </div>
         </div>
         <div class="media row my-3">
             <div class="col-12 col-md-1 d-flex justify-content-center">
-                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png" alt="Generic placeholder image">
+                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
+                    alt="Generic placeholder image">
             </div>
             <div class="col-12 col-md-11">
                 <div class="media-body">
                     <h5 class="mt-3 mt-md-0">Pandas replace function not working on datafram with floats</h5>
-                    I am using Pandas' replace function and it works on one DataFrame but not on another and I don't understand why. I have tried many different solutions but nothing seems to work 
+                    I am using Pandas' replace function and it works on one DataFrame but not on another and I don't
+                    understand why. I have tried many different solutions but nothing seems to work
                 </div>
             </div>
         </div>
         <div class="media row my-3">
             <div class="col-12 col-md-1 d-flex justify-content-center">
-                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png" alt="Generic placeholder image">
+                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
+                    alt="Generic placeholder image">
             </div>
             <div class="col-12 col-md-11">
                 <div class="media-body">
                     <h5 class="mt-3 mt-md-0">Pandas replace function not working on datafram with floats</h5>
-                    I am using Pandas' replace function and it works on one DataFrame but not on another and I don't understand why. I have tried many different solutions but nothing seems to work 
+                    I am using Pandas' replace function and it works on one DataFrame but not on another and I don't
+                    understand why. I have tried many different solutions but nothing seems to work
                 </div>
             </div>
         </div>
         <div class="media row my-3">
             <div class="col-12 col-md-1 d-flex justify-content-center">
-                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png" alt="Generic placeholder image">
+                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
+                    alt="Generic placeholder image">
             </div>
             <div class="col-12 col-md-11">
                 <div class="media-body">
                     <h5 class="mt-3 mt-md-0">Pandas replace function not working on datafram with floats</h5>
-                    I am using Pandas' replace function and it works on one DataFrame but not on another and I don't understand why. I have tried many different solutions but nothing seems to work 
+                    I am using Pandas' replace function and it works on one DataFrame but not on another and I don't
+                    understand why. I have tried many different solutions but nothing seems to work
                 </div>
             </div>
         </div>
         <div class="media row my-3">
             <div class="col-12 col-md-1 d-flex justify-content-center">
-                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png" alt="Generic placeholder image">
+                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
+                    alt="Generic placeholder image">
             </div>
             <div class="col-12 col-md-11">
                 <div class="media-body">
                     <h5 class="mt-3 mt-md-0">Pandas replace function not working on datafram with floats</h5>
-                    I am using Pandas' replace function and it works on one DataFrame but not on another and I don't understand why. I have tried many different solutions but nothing seems to work 
+                    I am using Pandas' replace function and it works on one DataFrame but not on another and I don't
+                    understand why. I have tried many different solutions but nothing seems to work
                 </div>
             </div>
         </div>

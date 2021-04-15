@@ -26,6 +26,17 @@
     .carousel-bg {
         background-color: black;
     }
+    .cat-img{
+    filter: saturate(1);
+}
+    .cat-img:hover{
+    filter: saturate(0);
+    transform: scale(1.05);
+}
+    .view-thread-button:hover{
+    transform: scale(1.05);
+    background-color: gray;
+}
     </style>
 </head>
 
@@ -67,16 +78,17 @@
         $result = mysqli_query($conn,$sql);
         $count_img =1; // just for incrementing image count
         while($row = mysqli_fetch_assoc($result)){
+            $id = $row['category_id'];
             $cat = $row['category_name'];
             $desc = $row['category_description'];
             // https://source.unsplash.com/500x400/?coding,'. $cat .'
             echo '<div class="col-12 col-sm-12 col-md-6 col-lg-4 my-2">
                     <div class="card" style="width: 18rem; margin: 0 auto;">
-                        <img src="img/card/'. $count_img .'.jpg" class="card-img-top" alt="...">
+                        <img src="img/card/'. $count_img .'.jpg" class="card-img-top cat-img" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">'. $cat .'</h5>
+                            <h5 class="card-title"><a style="text-decoration: none; color: black;" href="threadlist.php?catid='. $id .'">'. $cat .'</a></h5>
                             <p class="card-text">'. substr($desc, 0 ,90) .'...</p>
-                            <a href="#" class="btn btn-primary">View Threads</a>
+                            <a href="threadlist.php?catid='. $id .'" class="btn btn-primary view-thread-button">View Threads</a>
                         </div>
                     </div>
                 </div>';
