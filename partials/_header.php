@@ -35,11 +35,11 @@ echo ' <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         </ul>
         <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-success" type="submit">Search</button>
+            <button class="btn btn-primary" type="submit">Search</button>
         </form>
         <div class="mx-2">
-            <button class="btn btn-outline-success ml-2 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-            <button class="btn btn-outline-success mx-2 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#signupModal">Signup</button>
+            <button class="btn btn-outline-primary ml-2 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+            <button class="btn btn-outline-primary mx-2 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#signupModal">Signup</button>
         </div>
     </div>
 </div>

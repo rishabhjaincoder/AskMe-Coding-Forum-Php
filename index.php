@@ -9,35 +9,12 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- adding custom css -->
+    <link rel="stylesheet" href="css/style.css">
     <title>Welcome to AskMe - Coding Forum</title>
-    <style>
-    * {
-        font-family: 'Baloo Bhai 2', cursive;
-    }
-
-    .carousel-img {
-        opacity: 0.7;
-        z-index: 1;
-    }
-
-    .carousel-bg {
-        background-color: black;
-    }
-    .cat-img{
-    filter: saturate(1);
-}
-    .cat-img:hover{
-    filter: saturate(0);
-    transform: scale(1.05);
-}
-    .view-thread-button:hover{
-    transform: scale(1.05);
-    background-color: gray;
-}
-    </style>
 </head>
 
 <body>

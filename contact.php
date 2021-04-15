@@ -12,12 +12,10 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- adding custom css -->
+    <link rel="stylesheet" href="css/style.css">
     <title>Contact - Coding Forum</title>
-    <style>
-    * {
-        font-family: 'Baloo Bhai 2', cursive;
-    }
-    </style>
 </head>
 
 <body>
