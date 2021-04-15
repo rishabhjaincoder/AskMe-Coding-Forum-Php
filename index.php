@@ -19,7 +19,7 @@
     }
 
     .carousel-img {
-        opacity: 0.5;
+        opacity: 0.7;
         z-index: 1;
     }
 
@@ -37,16 +37,13 @@
     <div id="carouselExampleFade" class="carousel slide carousel-bg" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="carousel-img" src="https://source.unsplash.com/2400x400/?code,developer"
-                    class="d-block w-100" alt="...">
+                <img class="carousel-img" src="img/slider/1.jpg" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img class="carousel-img" src="https://source.unsplash.com/2400x400/?programmer,linux"
-                    class="d-block w-100" alt="...">
+                <img class="carousel-img" src="img/slider/2.jpg" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img class="carousel-img" src="https://source.unsplash.com/2400x400/?coder,programmer"
-                    class="d-block w-100" alt="...">
+                <img class="carousel-img" src="img/slider/3.jpg" class="d-block w-100" alt="...">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
@@ -68,12 +65,14 @@
             <?php
         $sql = "SELECT * FROM `categories`";
         $result = mysqli_query($conn,$sql);
+        $count_img =1; // just for incrementing image count
         while($row = mysqli_fetch_assoc($result)){
             $cat = $row['category_name'];
             $desc = $row['category_description'];
+            // https://source.unsplash.com/500x400/?coding,'. $cat .'
             echo '<div class="col-12 col-sm-12 col-md-6 col-lg-4 my-2">
                     <div class="card" style="width: 18rem; margin: 0 auto;">
-                        <img src="https://source.unsplash.com/500x400/?coding,'. $cat .'" class="card-img-top" alt="...">
+                        <img src="img/card/'. $count_img .'.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">'. $cat .'</h5>
                             <p class="card-text">'. substr($desc, 0 ,90) .'...</p>
@@ -81,6 +80,7 @@
                         </div>
                     </div>
                 </div>';
+            $count_img++;
         }
         ?>
         </div>
