@@ -22,7 +22,8 @@
         opacity: 0.5;
         z-index: 1;
     }
-    .carousel-bg{
+
+    .carousel-bg {
         background-color: black;
     }
     </style>
@@ -30,20 +31,21 @@
 
 <body>
     <?php include 'partials/_header.php'; ?>
+    <?php include 'partials/_dbconnect.php'; ?>
 
     <!-- ------------------- carousel ------------------- -->
     <div id="carouselExampleFade" class="carousel slide carousel-bg" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="carousel-img" src="https://source.unsplash.com/1600x400/?code,developer"
+                <img class="carousel-img" src="https://source.unsplash.com/2400x400/?code,developer"
                     class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img class="carousel-img" src="https://source.unsplash.com/1600x400/?programmer,linux"
+                <img class="carousel-img" src="https://source.unsplash.com/2400x400/?programmer,linux"
                     class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img class="carousel-img" src="https://source.unsplash.com/1600x400/?coder,programmer"
+                <img class="carousel-img" src="https://source.unsplash.com/2400x400/?coder,programmer"
                     class="d-block w-100" alt="...">
             </div>
         </div>
@@ -57,77 +59,30 @@
         </button>
     </div>
 
-    <!-- ------------------- Main Content ------------------- -->
+    <!-- ------------------- Category Cards ------------------- -->
     <div class="container text-center my-3">
         <h2>AskMe - Browse Categories</h2>
-
-        <div class="row">
-            <div class="col-md-4 my-2">
-                <div class="card" style="width: 18rem;">
-                    <img src="https://source.unsplash.com/500x400/?code,programming" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">View Threads</a>
+        <hr>
+        <div class="row my-3">
+            <!-- fetching categories from categories table -->
+            <?php
+        $sql = "SELECT * FROM `categories`";
+        $result = mysqli_query($conn,$sql);
+        while($row = mysqli_fetch_assoc($result)){
+            $cat = $row['category_name'];
+            $desc = $row['category_description'];
+            echo '<div class="col-12 col-sm-12 col-md-6 col-lg-4 my-2">
+                    <div class="card" style="width: 18rem; margin: 0 auto;">
+                        <img src="https://source.unsplash.com/500x400/?coding,'. $cat .'" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">'. $cat .'</h5>
+                            <p class="card-text">'. substr($desc, 0 ,90) .'...</p>
+                            <a href="#" class="btn btn-primary">View Threads</a>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4 my-2">
-                <div class="card" style="width: 18rem;">
-                    <img src="https://source.unsplash.com/500x400/?code,programming" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">View Threads</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 my-2">
-                <div class="card" style="width: 18rem;">
-                    <img src="https://source.unsplash.com/500x400/?code,programming" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">View Threads</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 my-2">
-                <div class="card" style="width: 18rem;">
-                    <img src="https://source.unsplash.com/500x400/?code,programming" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">View Threads</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 my-2">
-                <div class="card" style="width: 18rem;">
-                    <img src="https://source.unsplash.com/500x400/?code,programming" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">View Threads</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 my-2">
-                <div class="card" style="width: 18rem;">
-                    <img src="https://source.unsplash.com/500x400/?code,programming" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">View Threads</a>
-                    </div>
-                </div>
-            </div>
+                </div>';
+        }
+        ?>
         </div>
     </div>
 
