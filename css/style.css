@@ -30,3 +30,9 @@
     background-color: gray;
     transform: scale(1.05);
 }
+
+/* ------------------------------ index.php ------------------------------ */
+
+.hover-underline:hover{
+    text-decoration: underline;
+}
