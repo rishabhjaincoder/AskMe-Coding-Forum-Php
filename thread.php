@@ -15,7 +15,7 @@
 
     <!-- adding custom css -->
     <link rel="stylesheet" href="css/style.css">
-    <title>About - Coding Forum</title>
+    <title>Discussions - Coding Forum</title>
 </head>
 
 <body>
@@ -75,31 +75,7 @@
         <hr>
     </div>
     <div class="container my-4 px-5 min-height">
-
-        <!-- <?php
-    $id = $_GET['catid'];
-    $sql = "SELECT * FROM `threads` WHERE thread_cat_id=$id";
-    $result = mysqli_query($conn,$sql);
-
-    while($row = mysqli_fetch_assoc($result)){
-        $id = $row['thread_id'];
-        $title = $row['thread_title'];
-        $desc = $row['thread_desc'];
-        echo '<div class="media row my-3">
-            <div class="col-12 col-md-1 d-flex justify-content-center">
-                <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
-                alt="Generic placeholder image">
-            </div>
-            <div class="col-12 col-md-11">
-                <div class="media-body">
-                    <h5 class="mt-3 mt-md-0"><a style="text-decoration: none; color: black;" href="thread.php">'. $title .'</a></h5>
-                   '. $desc .'
-                </div>
-            </div>
-        </div>';
-    }
-    ?> -->
-
+        <!-- will add content here -->
     </div>
 
     <!-- ------------------- Footer ------------------- -->
