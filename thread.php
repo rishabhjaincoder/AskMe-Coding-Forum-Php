@@ -77,20 +77,60 @@
     <div class="container my-4 px-5 min-height">
         <!-- will add content here -->
     </div>
+<!-- 
+    <div class="container text-center my-4">
+        <h2 class="my-4">Browse Questions</h2>
+        <hr>
+    </div>
+    <div class="container my-4 px-5 min-height"> -->
+        <?php
+    // $id = $_GET['catid'];
+    // $sql = "SELECT * FROM `threads` WHERE thread_cat_id=$id";
+    // $result = mysqli_query($conn,$sql);
+    // $noResult = true;
+    
+    // while($row = mysqli_fetch_assoc($result)){
+    //     $noResult = false;
+    //     $id = $row['thread_id'];
+    //     $title = $row['thread_title'];
+    //     $desc = $row['thread_desc'];
+    //     global $catname;
+    //     echo '<div class="media row my-3">
+    //         <div class="col-12 col-md-1 d-flex justify-content-center">
+    //             <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
+    //             alt="Generic placeholder image">
+    //         </div>
+    //         <div class="col-12 col-md-11">
+    //             <div class="media-body">
+    //                 <h5 class="mt-3 mt-md-0 hover-underline"><a style="text-decoration: none; color: black;" href="thread.php?threadid='. $id .'">'. $title .'</a></h5>
+    //                '. $desc .'
+    //             </div>
+    //         </div>
+    //     </div>';
+    // }
+    // if($noResult){
+    //     echo '<div class="jumbotron jumbotron-fluid">
+    //     <div class="container">
+    //       <h1 class="display-4 text-center">No Threads Found</h1>
+    //       <p class="lead text-center">Be the first person to ask a question.</p>
+    //     </div>
+    //   </div>';
+    // }
+    ?>
 
-    <!-- ------------------- Footer ------------------- -->
-    <?php include 'partials/_footer.php'; ?>
+        <!-- ------------------- Footer ------------------- -->
+        <?php include 'partials/_footer.php'; ?>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
-        integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous">
-    </script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+            integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous">
+        </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
-        integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous">
-    </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+            integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous">
+        </script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous">
     </script> -->
 </body>
