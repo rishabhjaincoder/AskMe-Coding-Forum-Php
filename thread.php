@@ -13,6 +13,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500&display=swap" rel="stylesheet">
 
+    <!-- these are for swal alerts  -->
+    <script src="js/sweetalert2.all.min.js"></script>
+
     <!-- adding custom css -->
     <link rel="stylesheet" href="css/style.css">
     <title>Discussions - Coding Forum</title>
@@ -30,6 +33,27 @@
         $title = $row['thread_title'];
         $desc = $row['thread_desc'];
         $thread_cat_id = $row['thread_cat_id'];
+    }
+    ?>
+
+    <?php
+    $showAlert = false;
+    $method = $_SERVER['REQUEST_METHOD'];
+    if ($method == 'POST') {
+        // insert comment into database
+        $comment = $_POST['comment'];
+        $sql="INSERT INTO `comments` (`comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment', '$id', '0', current_timestamp());";
+        $result = mysqli_query($conn, $sql);
+        $showAlert = true;
+        if ($showAlert) {
+            echo '<script type="text/javascript">
+                     Swal.fire(
+                        "Your comment has been added!",
+                        "",
+                        "success"
+                    )
+                </script>';
+        }
     }
     ?>
 
@@ -69,68 +93,84 @@
         </nav>
     </div>
 
+    <!-- ------------------- Form to add comments ------------------- -->
+    <div class="container">
+        <div class="text-center pb-0">
+            <h2 class="mt-4 mb-3">Post a Comment</h2>
+        </div>
+        <form class="mx-2" action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="POST">
+            <div class="form-group my-1">
+                <label for="comment"><b>Type Your Comment</b></label>
+                <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
+        </form>
+    </div>
+
     <!-- ------------------- Browse Questions ------------------- -->
     <div class="container text-center my-4">
-        <h2 class="my-4">AskMe - Discussions</h2>
+        <h2 class="my-4">AskMe - Comments</h2>
         <hr>
     </div>
     <div class="container my-4 px-5 min-height">
-        <!-- will add content here -->
-    </div>
-<!-- 
-    <div class="container text-center my-4">
-        <h2 class="my-4">Browse Questions</h2>
-        <hr>
-    </div>
-    <div class="container my-4 px-5 min-height"> -->
         <?php
-    // $id = $_GET['catid'];
-    // $sql = "SELECT * FROM `threads` WHERE thread_cat_id=$id";
-    // $result = mysqli_query($conn,$sql);
-    // $noResult = true;
-    
-    // while($row = mysqli_fetch_assoc($result)){
-    //     $noResult = false;
-    //     $id = $row['thread_id'];
-    //     $title = $row['thread_title'];
-    //     $desc = $row['thread_desc'];
-    //     global $catname;
-    //     echo '<div class="media row my-3">
-    //         <div class="col-12 col-md-1 d-flex justify-content-center">
-    //             <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
-    //             alt="Generic placeholder image">
-    //         </div>
-    //         <div class="col-12 col-md-11">
-    //             <div class="media-body">
-    //                 <h5 class="mt-3 mt-md-0 hover-underline"><a style="text-decoration: none; color: black;" href="thread.php?threadid='. $id .'">'. $title .'</a></h5>
-    //                '. $desc .'
-    //             </div>
-    //         </div>
-    //     </div>';
-    // }
-    // if($noResult){
-    //     echo '<div class="jumbotron jumbotron-fluid">
-    //     <div class="container">
-    //       <h1 class="display-4 text-center">No Threads Found</h1>
-    //       <p class="lead text-center">Be the first person to ask a question.</p>
-    //     </div>
-    //   </div>';
-    // }
-    ?>
+        $id = $_GET['threadid'];
+        $sql = "SELECT * FROM `comments` WHERE thread_id=$id";
+        $result = mysqli_query($conn,$sql);
+        $noResult = true;
+        
+        while($row = mysqli_fetch_assoc($result)){
+            $noResult = false;
+            $id = $row['comment_id'];
+            $content = $row['comment_content'];
+            $comment_time = $row['comment_time'];
+            $new_time = date(' jS \of F Y - h:i:s A',strtotime($comment_time));
+            echo '<div class="media row my-4">
+                <div class="col-12 col-md-1 d-flex justify-content-center">
+                    <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
+                    alt="Generic placeholder image">
+                </div>
+                <div class="col-12 col-md-11">
+                    <div class="media-body">
+                        <h5 class="mt-3 mt-md-0 mb-0">Anonymous</h5>
+                        <div class="mt-0">Posted at '. $new_time .'</div>
+                    <div style="font-size: 1.3rem;">'. $content .'</div>
+                    </div>
+                </div>
+            </div>';
+        }
+        if($noResult){
+            echo '<div class="jumbotron jumbotron-fluid">
+            <div class="container">
+            <h1 class="display-4 text-center">No Comments Found</h1>
+            <p class="lead text-center">Be the first person to post a comment.</p>
+            </div>
+            </div>';
+        }
+        ?>
+    </div>
 
-        <!-- ------------------- Footer ------------------- -->
-        <?php include 'partials/_footer.php'; ?>
+    <!-- ------------------- Footer ------------------- -->
+    <?php include 'partials/_footer.php'; ?>
 
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
-            integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous">
-        </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+        integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous">
+    </script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
-            integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous">
-        </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+        integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous">
+    </script>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+    <!-- this will prevent form resubmission when page is reloaded -->
+    <script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+    </script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous">
     </script> -->
 </body>
