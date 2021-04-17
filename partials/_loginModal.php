@@ -6,22 +6,18 @@
                 <h5 class="modal-title" id="loginModalLabel">Login to AskMe</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form>
+            <form action="/forum/partials/_handleLogin.php" method="POST">
                 <div class="modal-body">
                     <div class="form-group mb-2">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        <label for="loginEmail">Email address</label>
+                        <input type="email" class="form-control" id="loginEmail" name="loginEmail" aria-describedby="emailHelp"
                             placeholder="Enter email">
                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                             else.</small>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <div class="form-group form-check mb-2">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        <label for="loginPass">Password</label>
+                        <input type="password" class="form-control" id="loginPass" name="loginPass" placeholder="Password">
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
                 </div>

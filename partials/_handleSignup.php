@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         header("Location: /forum/index.php?signupsuccess=false&error=$showError");
     }
     else{
-        if ($pass == $cpass && $user_email!="") {
+        if ($pass == $cpass && $user_email!="" && $pass!="" && $cpass!="") {
             $hash = password_hash($pass, PASSWORD_DEFAULT);
             $sql = "INSERT INTO `users` (`user_email`, `user_pass`, `timestamp`) VALUES ('$user_email', '$hash', current_timestamp())";
             $result = mysqli_query($conn, $sql);
