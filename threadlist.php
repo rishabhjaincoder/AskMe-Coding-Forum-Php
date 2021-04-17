@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500&display=swap" rel="stylesheet">
@@ -36,23 +37,39 @@
 
     <?php
     $showAlert = false;
+    $showErr = false;
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == 'POST') {
         // insert thread into database
         $th_title = $_POST['title'];
         $th_desc = $_POST['desc'];
-        $sql = "INSERT INTO `threads` (`thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`) VALUES ('$th_title', '$th_desc', '$id', '0', current_timestamp())";
-        $result = mysqli_query($conn, $sql);
-        $showAlert = true;
-        if ($showAlert) {
-            echo '<script type="text/javascript">
-                     Swal.fire(
-                        "Your thread has been added!",
-                        "Please wait for community to respond.",
-                        "success"
+        if ($th_title!="" and $th_desc!=""){
+            $sql = "INSERT INTO `threads` (`thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`) VALUES ('$th_title', '$th_desc', '$id', '0', current_timestamp())";
+            $result = mysqli_query($conn, $sql);
+            $showAlert = true;
+            if ($showAlert) {
+                echo '<script type="text/javascript">
+                Swal.fire(
+                    "Your thread has been added!",
+                    "Please wait for community to respond.",
+                    "success"
                     )
-                </script>';
+                    </script>';
+            }   
         }
+        else{
+            $showErr = true;
+            if ($showErr) {
+                echo '<script type="text/javascript">
+                Swal.fire(
+                    "Cannot submit empty form!",
+                    "Try Again",
+                    "error"
+                    )
+                    </script>';
+            }  
+        }
+
     }
     ?>
 
@@ -73,7 +90,8 @@
 
     <!-- ------------------- BreadCrumb ------------------- -->
     <div class="container my-3" style="font-size: 20px;">
-        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+            aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/forum/">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><?php echo $catname ?></li>
@@ -91,7 +109,8 @@
         <form class="mx-2" action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="POST">
             <div class="form-group">
                 <label for="title"><b>Problem Title</b></label>
-                <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp" placeholder="Enter Problem Title Here">
+                <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp"
+                    placeholder="Enter Problem Title Here">
                 <small id="emailHelp" class="form-text text-muted">Keep your title as short and crisp as
                     possible</small>
             </div>
@@ -120,7 +139,8 @@
             $id = $row['thread_id'];
             $title = $row['thread_title'];
             $desc = $row['thread_desc'];
-            global $catname;
+            $thread_time = $row['timestamp'];
+            $new_time = date(' jS \of F Y - h:i A',strtotime($thread_time));
             echo '<div class="media row my-3">
             <div class="col-12 col-md-1 d-flex justify-content-center">
                 <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
@@ -128,7 +148,8 @@
             </div>
             <div class="col-12 col-md-11">
                 <div class="media-body">
-                    <h5 class="mt-3 mt-md-0 hover-underline"><a style="text-decoration: none; color: black;" href="thread.php?threadid=' . $id . '">' . $title . '</a></h5>
+                <h5 class="mt-3 mt-md-0 hover-underline"><a style="text-decoration: none; color: black;" href="thread.php?threadid=' . $id . '">' . $title . '</a></h5>
+                    <h6 class="mt-0 mt-md-0">Posted by Anonymous at '. $new_time .'</h6>
                    ' . $desc . '
                 </div>
             </div>
@@ -149,17 +170,19 @@
     <!-- ------------------- Footer ------------------- -->
     <?php include 'partials/_footer.php'; ?>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+        integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous">
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+        integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous">
     </script>
 
     <!-- this will prevent form resubmission when page is reloaded -->
     <script>
-        if (window.history.replaceState) {
-            window.history.replaceState(null, null, window.location.href);
-        }
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
     </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

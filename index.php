@@ -12,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500&display=swap" rel="stylesheet">
 
+      <!-- these are for swal alerts  -->
+      <script src="js/sweetalert2.all.min.js"></script>
+
     <!-- adding custom css -->
     <link rel="stylesheet" href="css/style.css">
     <title>Welcome to AskMe - Coding Forum</title>

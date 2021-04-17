@@ -47,4 +47,24 @@ echo ' <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
 include "partials/_loginModal.php";
 include "partials/_signupModal.php";
+
+if(isset($_GET['signupsuccess']) and $_GET['signupsuccess']=="true"){
+    echo '<script type="text/javascript">
+            Swal.fire(
+            "Successfully Signed up!",
+            "You can now login",
+            "success"
+            )
+            </script>';
+        }
+elseif(isset($_GET['signupsuccess']) and $_GET['signupsuccess']!="true" and isset($_GET['error'])){
+    $error = $_GET['error'];
+    echo '<script type="text/javascript">
+    Swal.fire(
+            "'. $error .'!",
+            "Try Again",
+            "error"
+            )
+            </script>';
+        }
 ?>

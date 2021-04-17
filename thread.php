@@ -38,21 +38,36 @@
 
     <?php
     $showAlert = false;
+    $showErr = false;
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == 'POST') {
         // insert comment into database
         $comment = $_POST['comment'];
-        $sql="INSERT INTO `comments` (`comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment', '$id', '0', current_timestamp());";
-        $result = mysqli_query($conn, $sql);
-        $showAlert = true;
-        if ($showAlert) {
+        if ($comment!=""){
+            $sql="INSERT INTO `comments` (`comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment', '$id', '0', current_timestamp());";
+            $result = mysqli_query($conn, $sql);
+            $showAlert = true;
+            if ($showAlert) {
             echo '<script type="text/javascript">
                      Swal.fire(
-                        "Your comment has been added!",
+                         "Your comment has been added!",
                         "",
                         "success"
                     )
-                </script>';
+                    </script>';
+            }
+        }
+        else{
+            $showErr = true;
+            if ($showErr) {
+                echo '<script type="text/javascript">
+                Swal.fire(
+                    "Cannot submit empty form!",
+                    "Try Again",
+                    "error"
+                    )
+                    </script>';
+            }  
         }
     }
     ?>
@@ -66,8 +81,9 @@
             <p>This is a peer to peer forum. No Spam / Advertising / Self-promote in the forums is not allowed. Do not
                 post copyright-infringing material. Do not post “offensive” posts, links or images. Remain respectful of
                 other members at all times</p>
-            <p class="lead">
-                Posted by: Rishabh Jain
+            <p>
+                <span class="lead">Posted by: &nbsp; </span><span style="font-weight: 500; font-size: 1.3rem;">Rishabh
+                    Jain</span>
             </p>
         </div>
     </div>
@@ -124,7 +140,7 @@
             $id = $row['comment_id'];
             $content = $row['comment_content'];
             $comment_time = $row['comment_time'];
-            $new_time = date(' jS \of F Y - h:i:s A',strtotime($comment_time));
+            $new_time = date(' jS \of F Y - h:i A',strtotime($comment_time));
             echo '<div class="media row my-4">
                 <div class="col-12 col-md-1 d-flex justify-content-center">
                     <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
