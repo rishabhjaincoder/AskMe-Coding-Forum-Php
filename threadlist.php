@@ -40,11 +40,12 @@
     $showErr = false;
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == 'POST') {
+        $post_sno = $_POST["sno"];  // hidden userid coming from submitting thread form
         // insert thread into database
         $th_title = $_POST['title'];
         $th_desc = $_POST['desc'];
         if ($th_title!="" and $th_desc!=""){
-            $sql = "INSERT INTO `threads` (`thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`) VALUES ('$th_title', '$th_desc', '$id', '0', current_timestamp())";
+            $sql = "INSERT INTO `threads` (`thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`) VALUES ('$th_title', '$th_desc', '$id', '$post_sno', current_timestamp())";
             $result = mysqli_query($conn, $sql);
             $showAlert = true;
             if ($showAlert) {
@@ -120,6 +121,7 @@
                     <small id="emailHelp" class="form-text text-muted">Keep your title as short and crisp as
                         possible</small>
                 </div>
+                <input type="hidden" name="sno" value="'. $_SESSION["sno"] .'">
                 <div class="form-group my-1">
                     <label for="desc"><b>Elaborate Your Concern</b></label>
                     <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
@@ -149,14 +151,22 @@
         $sql = "SELECT * FROM `threads` WHERE thread_cat_id=$id";
         $result = mysqli_query($conn, $sql);
         $noResult = true;
-
+        
         while ($row = mysqli_fetch_assoc($result)) {
             $noResult = false;
             $id = $row['thread_id'];
             $title = $row['thread_title'];
             $desc = $row['thread_desc'];
+            $thread_user_id = $row['thread_user_id'];
             $thread_time = $row['timestamp'];
             $new_time = date(' jS \of F Y - h:i A',strtotime($thread_time));
+
+            // getting user email from users table
+            $sql2 = "SELECT user_email FROM `users` WHERE sno=$thread_user_id";
+            $result2 = mysqli_query($conn, $sql2);
+            $row2 = mysqli_fetch_assoc($result2); 
+            $user_email = $row2['user_email'];
+
             echo '<div class="media row my-3">
             <div class="col-12 col-md-1 d-flex justify-content-center">
                 <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
@@ -165,8 +175,8 @@
             <div class="col-12 col-md-11">
                 <div class="media-body">
                 <h5 class="mt-3 mt-md-0 hover-underline"><a style="text-decoration: none; color: black;" href="thread.php?threadid=' . $id . '">' . $title . '</a></h5>
-                    <h6 class="mt-0 mt-md-0">Posted by Anonymous at '. $new_time .'</h6>
                    ' . $desc . '
+                   <h6 class="mt-0 mt-md-0">Asked by <i style="color: #428bca;">'. $user_email .'</i> at '. $new_time .'</h6>
                 </div>
             </div>
         </div>';

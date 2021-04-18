@@ -41,10 +41,11 @@
     $showErr = false;
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == 'POST') {
+        $post_sno = $_POST["sno"];  // hidden userid coming from submitting comment form
         // insert comment into database
         $comment = $_POST['comment'];
         if ($comment!=""){
-            $sql="INSERT INTO `comments` (`comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment', '$id', '0', current_timestamp());";
+            $sql="INSERT INTO `comments` (`comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment', '$id', '$post_sno', current_timestamp());";
             $result = mysqli_query($conn, $sql);
             $showAlert = true;
             if ($showAlert) {
@@ -82,8 +83,23 @@
                 post copyright-infringing material. Do not post “offensive” posts, links or images. Remain respectful of
                 other members at all times</p>
             <p>
-                <span class="lead">Posted by: &nbsp; </span><span style="font-weight: 500; font-size: 1.3rem;">Rishabh
-                    Jain</span>
+                <span class="lead">Posted by: &nbsp; </span><span style="font-weight: 500; font-size: 1.3rem;">
+                <?php
+                    $thr_id = $_GET['threadid'];
+                    $thr_sql = "SELECT thread_user_id FROM `threads` WHERE thread_id='$thr_id'";
+                    $thr_result = mysqli_query($conn,$thr_sql);
+                    while($thr_row = mysqli_fetch_assoc($thr_result)){
+                        $thread_user_id = $thr_row['thread_user_id'];
+
+                        // getting user email from users table
+                        $thr_sql2 = "SELECT user_email FROM `users` WHERE sno=$thread_user_id";
+                        $thr_result2 = mysqli_query($conn, $thr_sql2);
+                        $thr_row2 = mysqli_fetch_assoc($thr_result2); 
+                        $thr_user_email = $thr_row2['user_email'];
+                        echo $thr_user_email;
+                    }
+                ?>
+                    </span>
             </p>
         </div>
     </div>
@@ -122,6 +138,7 @@
             <div class="form-group my-1">
                 <label for="comment"><b>Type Your Comment</b></label>
                 <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                <input type="hidden" name="sno" value="'. $_SESSION["sno"] .'">
             </div>
             <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
         </form>
@@ -154,7 +171,15 @@
             $id = $row['comment_id'];
             $content = $row['comment_content'];
             $comment_time = $row['comment_time'];
+            $comment_by = $row['comment_by'];
             $new_time = date(' jS \of F Y - h:i A',strtotime($comment_time));
+
+            // getting user email from users table
+            $sql2 = "SELECT user_email FROM `users` WHERE sno=$comment_by";
+            $result2 = mysqli_query($conn, $sql2);
+            $row2 = mysqli_fetch_assoc($result2); 
+            $user_email = $row2['user_email'];
+
             echo '<div class="media row my-4">
                 <div class="col-12 col-md-1 d-flex justify-content-center">
                     <img class="mr-3" width="60px" height="60px" src="img/user-default/user.png"
@@ -162,9 +187,9 @@
                 </div>
                 <div class="col-12 col-md-11">
                     <div class="media-body">
-                        <h5 class="mt-3 mt-md-0 mb-0">Anonymous</h5>
+                        <h5 class="mt-3 mt-md-0 mb-0">'. $user_email .'</h5>
+                        <div style="font-size: 1.3rem;">'. $content .'</div>
                         <div class="mt-0">Posted at '. $new_time .'</div>
-                    <div style="font-size: 1.3rem;">'. $content .'</div>
                     </div>
                 </div>
             </div>';

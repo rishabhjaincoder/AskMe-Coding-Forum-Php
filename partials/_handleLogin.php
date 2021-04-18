@@ -17,6 +17,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if(password_verify($pass, $row['user_pass']) && $email!=""){
                 session_start();
                 $_SESSION['loggedin'] = true;
+                $_SESSION['sno'] = $row['sno'];
                 $_SESSION['useremail'] = $email;
                 header("Location: /forum/index.php");    
                 exit();
