@@ -110,18 +110,32 @@
     </div>
 
     <!-- ------------------- Form to add comments ------------------- -->
-    <div class="container">
+
+    <?php
+    if(isset($_SESSION['loggedin']) and $_SESSION['loggedin']==true){
+        echo '
+        <div class="container">
         <div class="text-center pb-0">
             <h2 class="mt-4 mb-3">Post a Comment</h2>
         </div>
-        <form class="mx-2" action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="POST">
+        <form class="mx-2" action="'.$_SERVER['REQUEST_URI'].'" method="POST">
             <div class="form-group my-1">
                 <label for="comment"><b>Type Your Comment</b></label>
                 <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
             </div>
             <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
         </form>
-    </div>
+    </div>';
+    }
+    else{
+        echo '<div class="container text-center">
+                <h2 class="mt-4 mb-3">Post a Comment</h2>
+                <div class="alert alert-primary hover-underline" role="alert">
+                <a style="cursor: pointer; font-size: 18px;" data-bs-toggle="modal" data-bs-target="#loginModal">You are not logged in! Please login to post a comment.</a>
+                </div>
+              </div>';
+    }
+?>
 
     <!-- ------------------- Browse Questions ------------------- -->
     <div class="container text-center my-4">

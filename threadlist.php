@@ -100,27 +100,43 @@
     </div>
 
     <!-- ------------------- Form for adding a thread ------------------- -->
-    <div class="container">
-        <div class="text-center pb-0">
-            <h2 class="mt-4 mb-3">AskMe - Start a Discussion</h2>
-        </div>
-        <!-- $_SERVER['REQUEST_URI'] gives the current url along with parameters -->
-        <!-- $_SERVER['PHP_SELF'] gives the current url without parameters -->
-        <form class="mx-2" action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="POST">
-            <div class="form-group">
-                <label for="title"><b>Problem Title</b></label>
-                <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp"
-                    placeholder="Enter Problem Title Here">
-                <small id="emailHelp" class="form-text text-muted">Keep your title as short and crisp as
-                    possible</small>
+
+    <!-- $_SERVER['REQUEST_URI'] gives the current url along with parameters -->
+    <!-- $_SERVER['PHP_SELF'] gives the current url without parameters -->
+    <?php
+    if(isset($_SESSION['loggedin']) and $_SESSION['loggedin']==true){
+        echo '
+        <div class="container">
+            <div class="text-center pb-0">
+                <h2 class="mt-4 mb-3">AskMe - Start a Discussion</h2>
             </div>
-            <div class="form-group my-1">
-                <label for="desc"><b>Elaborate Your Concern</b></label>
-                <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary mt-2">Submit</button>
-        </form>
-    </div>
+            <form class="mx-2" action="';
+            echo $_SERVER['REQUEST_URI'];
+            echo  '" method="POST">
+                <div class="form-group">
+                    <label for="title"><b>Problem Title</b></label>
+                    <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp"
+                        placeholder="Enter Problem Title Here">
+                    <small id="emailHelp" class="form-text text-muted">Keep your title as short and crisp as
+                        possible</small>
+                </div>
+                <div class="form-group my-1">
+                    <label for="desc"><b>Elaborate Your Concern</b></label>
+                    <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+            </form>
+        </div>';
+    }
+    else{
+        echo '<div class="container text-center">
+                <h2 class="mt-4 mb-3">AskMe - Start a Discussion</h2>
+                <div class="alert alert-primary hover-underline" role="alert">
+                <a style="cursor: pointer; font-size: 18px;" data-bs-toggle="modal" data-bs-target="#loginModal">You are not logged in! Please login to start a discussion.</a>
+                </div>
+              </div>';
+    }
+?>
 
     <!-- ------------------- Browse Questions ------------------- -->
     <div class="container text-center my-4">
