@@ -41,10 +41,17 @@
     $showErr = false;
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == 'POST') {
+
+        // will add code here to check if the user is logged in or not
+
         $post_sno = $_POST["sno"];  // hidden userid coming from submitting comment form
         // insert comment into database
         $comment = $_POST['comment'];
         if ($comment!=""){
+            // this will replce < and > with &ltl and &gt; in order to prevent sql injection or other attacks
+            $comment = str_replace("<", "&lt;", $comment);
+            $comment = str_replace(">", "&gt;", $comment);
+
             $sql="INSERT INTO `comments` (`comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment', '$id', '$post_sno', current_timestamp());";
             $result = mysqli_query($conn, $sql);
             $showAlert = true;
@@ -84,7 +91,7 @@
                 other members at all times</p>
             <p>
                 <span class="lead">Posted by: &nbsp; </span><span style="font-weight: 500; font-size: 1.3rem;">
-                <?php
+                <em><?php
                     $thr_id = $_GET['threadid'];
                     $thr_sql = "SELECT thread_user_id FROM `threads` WHERE thread_id='$thr_id'";
                     $thr_result = mysqli_query($conn,$thr_sql);
@@ -98,7 +105,7 @@
                         $thr_user_email = $thr_row2['user_email'];
                         echo $thr_user_email;
                     }
-                ?>
+                ?></em>
                     </span>
             </p>
         </div>

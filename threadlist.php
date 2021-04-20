@@ -40,11 +40,21 @@
     $showErr = false;
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == 'POST') {
+
+        // will add code here to check if the user is logged in or not
+
         $post_sno = $_POST["sno"];  // hidden userid coming from submitting thread form
         // insert thread into database
         $th_title = $_POST['title'];
         $th_desc = $_POST['desc'];
         if ($th_title!="" and $th_desc!=""){
+            
+            // this will replce < and > with &ltl and &gt; in order to prevent sql injection or other attacks
+            $th_title = str_replace("<", "&lt;", $th_title);
+            $th_title = str_replace(">", "&gt;", $th_title);
+            $th_desc = str_replace("<", "&lt;", $th_desc);
+            $th_desc = str_replace(">", "&gt;", $th_desc);
+            
             $sql = "INSERT INTO `threads` (`thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`) VALUES ('$th_title', '$th_desc', '$id', '$post_sno', current_timestamp())";
             $result = mysqli_query($conn, $sql);
             $showAlert = true;
