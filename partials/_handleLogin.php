@@ -9,7 +9,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $result = mysqli_query($conn, $Sql);
         $numRows = mysqli_num_rows($result);
         if($numRows!=1){
-            $showError = "Couldn’t find a AskMe account associated with this email";
+            $showError = "Couldn’t find a AskMe account associated with this username";
             header("Location: /forum/index.php?loginsuccess=false&error=$showError");
         }
         else{

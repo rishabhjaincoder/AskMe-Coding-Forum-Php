@@ -26,7 +26,7 @@ echo ' <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">';
     
     // fetching categories name for navigation category option
-    $sql = "SELECT * FROM `categories`";
+    $sql = "SELECT * FROM `categories` LIMIT 3";
     $result = mysqli_query($conn,$sql);
     while($row = mysqli_fetch_assoc($result)){
         $cat_id = $row['category_id'];
@@ -44,8 +44,8 @@ echo ' <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
         // handling Welcome Email option after login
         if(isset($_SESSION['loggedin']) and $_SESSION['loggedin']==true){
-            echo '<form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            echo '<form class="d-flex" method="get" action="search.php">
+                    <input class="form-control me-2" name="query" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-primary" type="submit">Search</button>
                     <p class="text-light mx-4 my-0 text-center"> Welcome '. $_SESSION['useremail'] .'</p>
                 <a href="partials/_logout.php" class="btn btn-outline-primary ml-2 py-2">Logout</a>
@@ -53,8 +53,8 @@ echo ' <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         }
         else{
             echo '
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="d-flex" method="get" action="search.php">
+                <input class="form-control me-2" name="query" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-primary" type="submit">Search</button>
             </form>
             <div class="mx-2">

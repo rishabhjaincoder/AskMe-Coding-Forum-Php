@@ -11,7 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $result = mysqli_query($conn, $existSql);
     $numRows = mysqli_num_rows($result);
     if($numRows > 0){
-        $showError = "Email Already Exists";
+        $showError = "Username Already Exists";
         header("Location: /forum/index.php?signupsuccess=false&error=$showError");
     }
     else{
