@@ -31,14 +31,21 @@
             <hr>
         </div>
         <?php 
+        $query = $_GET['query'];
         $noresult =true;
-        $sql = "SELECT * FROM `threads` WHERE MATCH (thread_title, thread_desc) against ('".$_GET["query"]."')";
+        $sql = "SELECT * FROM `threads` WHERE MATCH (thread_title, thread_desc) against ('".$query."')";
         $result = mysqli_query($conn,$sql);
         while($row = mysqli_fetch_assoc($result)){
             $noresult = false;
             $id = $row['thread_id'];
             $title = $row['thread_title'];
             $desc = $row['thread_desc'];
+
+            // highlighting text
+            $updatedQuery = '<span style="background-color: yellow;">'. $query .'</span>';
+            $updatedTitle = str_ireplace($query, $updatedQuery, $title);
+            $updatedDesc = str_ireplace($query, $updatedQuery, $desc);
+            
             $thread_user_id = $row['thread_user_id'];
             $thread_time = $row['timestamp'];
             $new_time = date(' jS \of F Y - h:i A',strtotime($thread_time));
@@ -52,9 +59,9 @@
             echo '<div class="result my-5">
                     <h3 class="hover-underline">
                         <a style="text-decoration: none;" href="/forum/thread.php?threadid='.$id.'" class="text-dark">
-                        '. $title .'
+                        '. $updatedTitle .'
                         </a></h3>
-                    <p class="lead">'. $desc .'</p>
+                    <p class="lead">'. $updatedDesc .'</p>
                    <h6 class="mt-0 mt-md-0">Asked by <i style="color: #428bca;">'. $user_email .'</i> at '. $new_time .'</h6>
                     <hr>
                 </div>';
