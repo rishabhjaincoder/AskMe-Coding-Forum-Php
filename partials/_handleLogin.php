@@ -2,10 +2,10 @@
 $showError = "false";
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     include '_dbconnect.php';
-    $email = $_POST['loginEmail'];
+    $username = $_POST['loginUsername'];
     $pass = $_POST['loginPass'];
-    if($email!="" or $pass!=""){
-        $Sql = "SELECT * FROM `users` WHERE user_email = '$email'";
+    if($username!="" or $pass!=""){
+        $Sql = "SELECT * FROM `users` WHERE user_name = '$username'";
         $result = mysqli_query($conn, $Sql);
         $numRows = mysqli_num_rows($result);
         if($numRows!=1){
@@ -14,11 +14,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         else{
             $row = mysqli_fetch_assoc($result);
-            if(password_verify($pass, $row['user_pass']) && $email!=""){
+            if(password_verify($pass, $row['user_pass']) && $username!=""){
                 session_start();
                 $_SESSION['loggedin'] = true;
                 $_SESSION['sno'] = $row['sno'];
-                $_SESSION['useremail'] = $email;
+                $_SESSION['username'] = $username;
                 header("Location: /forum/index.php");    
                 exit();
             }

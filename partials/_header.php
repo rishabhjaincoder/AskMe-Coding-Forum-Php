@@ -42,12 +42,12 @@ echo ' <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             </li>
         </ul>';
 
-        // handling Welcome Email option after login
+        // handling Welcome Username option after login
         if(isset($_SESSION['loggedin']) and $_SESSION['loggedin']==true){
             echo '<form class="d-flex" method="get" action="search.php">
                     <input class="form-control me-2" name="query" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-primary" type="submit">Search</button>
-                    <p class="text-light mx-4 my-0 text-center"> Welcome '. $_SESSION['useremail'] .'</p>
+                    <p class="text-light mx-4 my-0 text-center"> Welcome '. $_SESSION['username'] .'</p>
                 <a href="partials/_logout.php" class="btn btn-outline-primary ml-2 py-2">Logout</a>
                 </form>';
         }

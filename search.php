@@ -50,11 +50,11 @@
             $thread_time = $row['timestamp'];
             $new_time = date(' jS \of F Y - h:i A',strtotime($thread_time));
 
-            // getting user email from users table
-            $sql2 = "SELECT user_email FROM `users` WHERE sno=$thread_user_id";
+            // getting username from users table
+            $sql2 = "SELECT user_name FROM `users` WHERE sno=$thread_user_id";
             $result2 = mysqli_query($conn, $sql2);
             $row2 = mysqli_fetch_assoc($result2); 
-            $user_email = $row2['user_email'];
+            $user_name = $row2['user_name'];
             
             echo '<div class="result my-5">
                     <h3 class="hover-underline">
@@ -62,7 +62,7 @@
                         '. $updatedTitle .'
                         </a></h3>
                     <p class="lead">'. $updatedDesc .'</p>
-                   <h6 class="mt-0 mt-md-0">Asked by <i style="color: #428bca;">'. $user_email .'</i> at '. $new_time .'</h6>
+                   <h6 class="mt-0 mt-md-0">Asked by <i style="color: #428bca;">'. $user_name .'</i> at '. $new_time .'</h6>
                     <hr>
                 </div>';
             }
