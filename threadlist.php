@@ -16,6 +16,9 @@
     <!-- these are for swal alerts  -->
     <script src="js/sweetalert2.all.min.js"></script>
 
+    <!-- recaptcha script -->
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
     <!-- adding custom css -->
     <link rel="stylesheet" href="css/style.css">
     <title>About - Coding Forum</title>
@@ -35,13 +38,51 @@
     }
     ?>
 
+<!-- https://www.bronco.co.uk/our-ideas/how-to-add-google-recaptcha-to-a-form-phphtml/
+https://stackoverflow.com/questions/3232904/using-recaptcha-on-localhost -->
     <?php
+    // recaptcha function 
+    function reCaptcha($recaptcha){
+        $secret = "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe";
+        $ip = $_SERVER['REMOTE_ADDR'];
+      
+        $postvars = array("secret"=>$secret, "response"=>$recaptcha, "remoteip"=>$ip);
+        $url = "https://www.google.com/recaptcha/api/siteverify";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
+        $data = curl_exec($ch);
+        curl_close($ch);
+      
+        return json_decode($data, true);
+      }
+
     $showAlert = false;
     $showErr = false;
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == 'POST') {
         //  to check if the user is logged in or not
         if(isset($_SESSION['loggedin']) and $_SESSION['loggedin']==true){
+
+            // adding recaptcha
+            $recaptcha = $_POST['g-recaptcha-response'];
+            $res = reCaptcha($recaptcha);
+            if(!$res['success']){
+                // Error
+                $showErr = true;
+                if ($showErr) {
+                    echo '<script type="text/javascript">
+                    Swal.fire(
+                        "Something Went wrong!",
+                        "Try Again",
+                        "error"
+                        )
+                        </script>';
+                }
+            }
+
             $post_sno = $_POST["sno"];  // hidden userid coming from submitting thread form
             // insert thread into database
             $th_title = $_POST['title'];
@@ -148,7 +189,8 @@
                     <label for="desc"><b>Elaborate Your Concern</b></label>
                     <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                <div class="my-2 g-recaptcha brochure__form__captcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                <button type="submit" class="btn btn-primary mt-1">Submit</button>
             </form>
         </div>';
     }
