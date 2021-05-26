@@ -219,7 +219,7 @@
                     <div class="comment-info">';
                         
 // here we will write logic for like and dislike
-
+if(isset($_SESSION['loggedin']) and $_SESSION['loggedin']==true){
             // if user likes post, style button differently 
             echo '<i ';
       	    if (userLiked($id)){
@@ -242,6 +242,7 @@
              echo ' data-id="'. $id .'';  
            echo '"></i>
          <span class="dislikes">'. getDislikes($id) .'</span>';
+        } // isSet Ends here
                 echo '</div>
         </div>';
         echo '</div>';
