@@ -109,10 +109,10 @@ if (isset($_POST['action'])) {
     }
   }
 
-$id = $_GET['threadid'];
-  $sql = "SELECT * FROM `comments` WHERE thread_id=$id";
-  $result = mysqli_query($conn,$sql);
-  $noResult = true;
-  $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+// $id = $_GET['threadid'];
+//   $sql = "SELECT * FROM `comments` WHERE thread_id=$id";
+//   $result = mysqli_query($conn,$sql);
+//   $noResult = true;
+//   $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 ?>

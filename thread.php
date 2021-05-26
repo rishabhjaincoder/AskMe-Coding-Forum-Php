@@ -185,18 +185,18 @@
     </div>
     <div class="container my-4 px-5 min-height">
         <?php
-        // $id = $_GET['threadid'];
-        // $sql = "SELECT * FROM `comments` WHERE thread_id=$id";
-        // $result = mysqli_query($conn,$sql);
-        // $noResult = true;
+        $id = $_GET['threadid'];
+        $sql = "SELECT * FROM `comments` WHERE thread_id=$id";
+        $result = mysqli_query($conn,$sql);
+        $noResult = true;
         
-        // while($row = mysqli_fetch_assoc($result)){
-            foreach ($comments as $comment){
+        while($row = mysqli_fetch_assoc($result)){
+            // foreach ($comments as $comment){
             $noResult = false;
-            $id = $comment['comment_id'];
-            $content = $comment['comment_content'];
-            $comment_time = $comment['comment_time'];
-            $comment_by = $comment['comment_by'];
+            $id = $row['comment_id'];
+            $content = $row['comment_content'];
+            $comment_time = $row['comment_time'];
+            $comment_by = $row['comment_by'];
             $new_time = date(' jS \of F Y - h:i A',strtotime($comment_time));
 
             // getting username from users table
