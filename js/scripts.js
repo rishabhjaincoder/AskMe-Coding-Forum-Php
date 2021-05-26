@@ -31,6 +31,7 @@ $(document).ready(function(){
     
               // change button styling of the other button if user is reacting the second time to post
               $clicked_btn.siblings('i.fa-thumbs-down').removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
+              location.reload();
           }
       });		
     
@@ -67,6 +68,7 @@ $(document).ready(function(){
               
               // change button styling of the other button if user is reacting the second time to post
               $clicked_btn.siblings('i.fa-thumbs-up').removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
+              location.reload();
           }
       });	
     
