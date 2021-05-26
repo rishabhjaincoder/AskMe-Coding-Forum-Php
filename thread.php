@@ -16,6 +16,9 @@
     <!-- these are for swal alerts  -->
     <script src="js/sweetalert2.all.min.js"></script>
 
+    <!-- adding font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
     <!-- adding custom css -->
     <link rel="stylesheet" href="css/style.css">
     <title>Discussions - Coding Forum</title>
@@ -24,6 +27,7 @@
 <body>
     <?php include 'partials/_dbconnect.php'; ?>
     <?php include 'partials/_header.php'; ?>
+    <?php include 'partials/_handleUpvote.php'; ?>
 
     <?php
     $id = $_GET['threadid'];
@@ -181,18 +185,18 @@
     </div>
     <div class="container my-4 px-5 min-height">
         <?php
-        $id = $_GET['threadid'];
-        $sql = "SELECT * FROM `comments` WHERE thread_id=$id ORDER BY `upvote` DESC";
-        $result = mysqli_query($conn,$sql);
-        $noResult = true;
+        // $id = $_GET['threadid'];
+        // $sql = "SELECT * FROM `comments` WHERE thread_id=$id";
+        // $result = mysqli_query($conn,$sql);
+        // $noResult = true;
         
-        while($row = mysqli_fetch_assoc($result)){
+        // while($row = mysqli_fetch_assoc($result)){
+            foreach ($comments as $comment){
             $noResult = false;
-            $id = $row['comment_id'];
-            $content = $row['comment_content'];
-            $comment_time = $row['comment_time'];
-            $comment_by = $row['comment_by'];
-            $upvote = $row['upvote'];
+            $id = $comment['comment_id'];
+            $content = $comment['comment_content'];
+            $comment_time = $comment['comment_time'];
+            $comment_by = $comment['comment_by'];
             $new_time = date(' jS \of F Y - h:i A',strtotime($comment_time));
 
             // getting username from users table
@@ -212,19 +216,36 @@
                         <div style="font-size: 1.3rem;">'. $content .'</div>
                         <div class="mt-0">Posted at '. $new_time .'</div>
                     </div>
-                    <div>
-                        <span class="badge badge-pill badge-dark bg-primary">
-                        '. $upvote .'
-                        </span>
-                        <a href="partials/_handleUpvote.php" style="text-decoration:none">
-                            <span class="m-1">
-                                Upvote
-                                <img style="cursor:pointer" width="25px" height="25px"  src="img/upvote/upvote.png" alt="Upvote">
-                            </span>
-                        </a>
-                    </div>
-                </div>
-            </div>';
+                    <div class="comment-info">';
+                        
+// here we will write logic for like and dislike
+
+            // if user likes post, style button differently 
+            echo '<i ';
+      	    if (userLiked($id)){
+                  echo 'class="fa fa-thumbs-up like-btn"';
+              }
+      	    else{
+                echo 'class="fa fa-thumbs-o-up like-btn"';
+            }
+      		echo ' data-id="'. $id .'';  
+      	  echo '"></i>
+      	<span class="likes">'. getLikes($id) .'</span>';
+             // if user dislikes post, style button differently
+             echo '&nbsp;&nbsp;&nbsp;&nbsp; <i ';
+             if (userDisliked($id)){
+                 echo 'class="fa fa-thumbs-down dislike-btn"';
+             }
+             else{
+               echo 'class="fa fa-thumbs-o-down dislike-btn"';
+           }
+             echo ' data-id="'. $id .'';  
+           echo '"></i>
+         <span class="dislikes">'. getDislikes($id) .'</span>';
+                echo '</div>
+        </div>';
+        echo '</div>';
+
         }
         if($noResult){
             echo '<div class="jumbotron jumbotron-fluid">
@@ -257,6 +278,9 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+     <!-- adding script for like and dislike -->
+     <script src="js/scripts.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous">
     </script> -->

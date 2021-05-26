@@ -37,3 +37,6 @@
     text-decoration: underline;
 }
 
+.fa-thumbs-down, .fa-thumbs-o-down {
+    transform:rotateY(180deg);
+  }
